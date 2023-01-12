@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Version } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller({ path: 'users', version: '1' })
+@Controller({ path: 'users' })
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
@@ -12,9 +12,16 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Version('1')
   @Get()
-  findAll() {
+  getV1() {
     return "this is a call from version 1"
+  }
+
+  @Version('2')
+  @Get()
+  getv2() {
+    return "this is a call from version 2"
   }
 
   @Get(':id')
